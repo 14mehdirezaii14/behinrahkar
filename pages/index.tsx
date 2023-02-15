@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
-
-
+import BoxPost from '@/components/BoxPost'
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 export default function Home() {
   return (
@@ -13,6 +14,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <Container>
+        <Grid container spacing={2}>
+          <Grid item xs={4} md={2}>
+            <BoxPost />
+          </Grid>
+        </Grid>
+      </Container>
     </>
   )
 }
