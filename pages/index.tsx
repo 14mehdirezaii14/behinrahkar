@@ -4,17 +4,30 @@ import styles from '@/styles/Home.module.css'
 import BoxPost from '@/components/BoxPost'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import { useQuery } from 'react-query';
-export default function Home() {
-  const { isLoading, error, data } = useQuery('posts',
-    () => fetch('https://jsonplaceholder.typicode.com/posts').then((res) => {
-      return res.json()
-    })
-  )
-  console.log(isLoading)
-  console.log(data)
-  if (isLoading) return 'Loading...'
-  if (error) return 'An error has occurred: ' + error
+import { useQuery, QueryClient, dehydrate } from "react-query"
+import { GetStaticProps, } from "next"// import { fetchPosts } from '@/components/fetchPosts';
+import Link from 'next/link';
+
+
+export const getStaticProps: GetStaticProps = async (context) => {
+
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(["posts"],
+      () => fetch(`https://jsonplaceholder.typicode.com/posts`).then((res) => {
+          return res.json()
+      })
+  );
+  console.log('[id]:13', dehydrate(queryClient))
+  return {
+      props: {
+          dehydratedState: dehydrate(queryClient)
+      }
+  };
+};
+
+export default function Home(props:any) {
+  console.log(props)
+
   return (
     <>
       <Head>
@@ -27,7 +40,10 @@ export default function Home() {
       <Container>
         <Grid container spacing={2}>
           <Grid item md={4}>
-            <BoxPost />
+            <Link href='/post/1'>
+              <BoxPost />
+            </Link>
+
           </Grid>
         </Grid>
       </Container>
