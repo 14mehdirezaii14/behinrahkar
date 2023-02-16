@@ -4,8 +4,17 @@ import styles from '@/styles/Home.module.css'
 import BoxPost from '@/components/BoxPost'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-
+import { useQuery } from 'react-query';
 export default function Home() {
+  const { isLoading, error, data } = useQuery('posts',
+    () => fetch('https://jsonplaceholder.typicode.com/posts').then((res) => {
+      return res.json()
+    })
+  )
+  console.log(isLoading)
+  console.log(data)
+  if (isLoading) return 'Loading...'
+  if (error) return 'An error has occurred: ' + error
   return (
     <>
       <Head>
@@ -17,7 +26,7 @@ export default function Home() {
 
       <Container>
         <Grid container spacing={2}>
-          <Grid item xs={4} md={2}>
+          <Grid item md={4}>
             <BoxPost />
           </Grid>
         </Grid>
