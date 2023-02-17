@@ -8,15 +8,13 @@ import { useQuery, QueryClient, dehydrate } from "react-query"
 import { GetStaticProps, } from "next"// import { fetchPosts } from '@/components/fetchPosts';
 import Link from 'next/link';
 import fetchPost from '@/components/fetchPosts';
-import { useEffect } from 'react';
 
-export const getStaticProps: GetStaticProps = async (context) => {
+
+
+export const getStaticProps: GetStaticProps = async () => {
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(["posts"],
-    () => fetchPost().then((res) => res)
-  );
-  console.log('[id]:13', dehydrate(queryClient))
+  await queryClient.prefetchQuery(['posts'], () => fetchPost());
   return {
     props: {
       dehydratedState: dehydrate(queryClient)
@@ -24,10 +22,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 };
 
-export default function Home(props: any) {
-
-
-
+export default function Home() {
+  const { data, isLoading } = useQuery(['post'], () => fetchPost());
   return (
     <>
       <Head>
@@ -39,17 +35,15 @@ export default function Home(props: any) {
 
       <Container>
         <Grid container spacing={2}>
-
-          {props.dehydratedState.queries[0].state.data.map((item: any) => {
+          {isLoading ? 'Loading ...' : data.map((item: any) => {
             return (
               <Grid key={item.id} item md={4}>
-                <Link href={`/post/${item.id}`}>
+                <Link shallow={true} href={`/post/${item.id}`}>
                   <BoxPost {...item} />
                 </Link>
               </Grid>
             )
           })}
-
         </Grid>
       </Container>
     </>

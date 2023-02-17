@@ -1,21 +1,23 @@
 import { useQuery, QueryClient, dehydrate } from "react-query"
 import { GetStaticProps, GetStaticPaths } from "next"
-import { Post } from "@/types/post";
+// import { Post } from "@/types/post";
 import fetchPost from "@/components/fetchPosts";
-
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 export const getStaticProps: GetStaticProps = async (context) => {
 
     const id = context.params?.id as string;
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery(["posts", id],
-        () => fetchPost(id).then((res) => res)
-    );
 
-    let data = dehydrate(queryClient).queries[0].state.data
+    await queryClient.prefetchQuery({
+        queryKey: ['singlePost'],
+        queryFn: () => fetchPost(id)
+    });
 
     return {
         props: {
-            data
+            dehydratedState: dehydrate(queryClient),
         }
     };
 };
@@ -24,24 +26,28 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
         paths: [],
-        fallback: true
+        fallback: "blocking"
     };
 };
 
 
-function Post(props: { data: Post }) {
-    console.log(props.data)
-    const { body, id, title, userId } = props.data
+function Post() {
+    const route: any = useRouter();
+    const id = route.query.id
+    const { data, isLoading } = useQuery(['singlePost', id], () => fetchPost(id));
+    if (isLoading) return "Loading ..."
     return (
         <>
             <div>
-                <p>title : {title}</p>
-                <p>id : {id}</p>
-                <p>body : {body}</p>
-                <p>userId : {userId}</p>
+                <Link shallow={true} href='/'>Back</Link>
+                <p>title : {data.title}</p>
+                <p>id : {data.id}</p>
+                <p>body : {data.body}</p>
+                <p>userId : {data.userId}</p>
             </div>
         </>
     )
+
 }
 
 
