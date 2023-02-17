@@ -1,0 +1,10 @@
+.cardBoxPost {
+    min-height: 250px;
+    background-color: rgb(67, 67, 67) !important;
+    display: flex;
+    align-items: baseline;
+}
+
+.cardBoxPost>*{
+    color: rgb(180, 180, 180);
+}

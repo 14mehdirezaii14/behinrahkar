@@ -7,26 +7,26 @@ import Grid from '@mui/material/Grid';
 import { useQuery, QueryClient, dehydrate } from "react-query"
 import { GetStaticProps, } from "next"// import { fetchPosts } from '@/components/fetchPosts';
 import Link from 'next/link';
-
+import fetchPost from '@/components/fetchPosts';
+import { useEffect } from 'react';
 
 export const getStaticProps: GetStaticProps = async (context) => {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(["posts"],
-      () => fetch(`https://jsonplaceholder.typicode.com/posts`).then((res) => {
-          return res.json()
-      })
+    () => fetchPost().then((res) => res)
   );
   console.log('[id]:13', dehydrate(queryClient))
   return {
-      props: {
-          dehydratedState: dehydrate(queryClient)
-      }
+    props: {
+      dehydratedState: dehydrate(queryClient)
+    }
   };
 };
 
-export default function Home(props:any) {
-  console.log(props)
+export default function Home(props: any) {
+
+
 
   return (
     <>
@@ -39,12 +39,17 @@ export default function Home(props:any) {
 
       <Container>
         <Grid container spacing={2}>
-          <Grid item md={4}>
-            <Link href='/post/1'>
-              <BoxPost />
-            </Link>
 
-          </Grid>
+          {props.dehydratedState.queries[0].state.data.map((item: any) => {
+            return (
+              <Grid key={item.id} item md={4}>
+                <Link href={`/post/${item.id}`}>
+                  <BoxPost {...item} />
+                </Link>
+              </Grid>
+            )
+          })}
+
         </Grid>
       </Container>
     </>

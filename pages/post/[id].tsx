@@ -1,19 +1,21 @@
 import { useQuery, QueryClient, dehydrate } from "react-query"
 import { GetStaticProps, GetStaticPaths } from "next"
-
+import { Post } from "@/types/post";
+import fetchPost from "@/components/fetchPosts";
 
 export const getStaticProps: GetStaticProps = async (context) => {
+
     const id = context.params?.id as string;
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery(["posts", id],
-        () => fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then((res) => {
-            return res.json()
-        })
+        () => fetchPost(id).then((res) => res)
     );
-    console.log('[id]:13', dehydrate(queryClient))
+
+    let data = dehydrate(queryClient).queries[0].state.data
+
     return {
         props: {
-            dehydratedState: dehydrate(queryClient)
+            data
         }
     };
 };
@@ -21,17 +23,23 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
-        paths: [{ params: { id: '1' } }],
+        paths: [],
         fallback: true
     };
 };
 
 
-function Post(props: any) {
-    console.log(props)
+function Post(props: { data: Post }) {
+    console.log(props.data)
+    const { body, id, title, userId } = props.data
     return (
         <>
-            Post
+            <div>
+                <p>title : {title}</p>
+                <p>id : {id}</p>
+                <p>body : {body}</p>
+                <p>userId : {userId}</p>
+            </div>
         </>
     )
 }
