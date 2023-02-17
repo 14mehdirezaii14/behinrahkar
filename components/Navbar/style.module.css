@@ -2,13 +2,13 @@
     color: white !important;
     border-radius: 10px;
     background-color: rgb(61, 61, 61);
-    padding-right: 50px;
+    padding-left: 50px;
 }
 
 .iconSearch{
-    float: right;
+    float: left;
     position: absolute;
     top: 25px;
     z-index: 1;
-    margin-right: 12px;
+    margin-left: 12px;
 }

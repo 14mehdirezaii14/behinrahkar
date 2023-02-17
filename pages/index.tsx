@@ -4,17 +4,17 @@ import styles from '@/styles/Home.module.css'
 import BoxPost from '@/components/BoxPost'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import { useQuery, QueryClient, dehydrate } from "react-query"
+import { useQuery, QueryClient, dehydrate, useMutation } from "react-query"
 import { GetStaticProps, } from "next"// import { fetchPosts } from '@/components/fetchPosts';
 import Link from 'next/link';
 import fetchPost from '@/components/fetchPosts';
-
-
+import { Post } from '@/types/post';
+import { useEffect } from 'react';
+import { searchPost } from '@/utils/searchPost';
 
 export const getStaticProps: GetStaticProps = async () => {
-
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['posts'], () => fetchPost());
+  await queryClient.prefetchQuery(['allPosts'], () => fetchPost());
   return {
     props: {
       dehydratedState: dehydrate(queryClient)
@@ -23,7 +23,9 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default function Home() {
-  const { data, isLoading } = useQuery(['post'], () => fetchPost());
+  const { data, isLoading } = useQuery(['allPosts'], () => fetchPost());
+
+
   return (
     <>
       <Head>
@@ -35,9 +37,9 @@ export default function Home() {
 
       <Container>
         <Grid container spacing={2}>
-          {isLoading ? 'Loading ...' : data.map((item: any) => {
+          {isLoading ? 'Loading ...' : data.map((item: Post) => {
             return (
-              <Grid key={item.id} item md={4}>
+              <Grid alignItems='center' key={item.id} item md={4}>
                 <Link shallow={true} href={`/post/${item.id}`}>
                   <BoxPost {...item} />
                 </Link>
