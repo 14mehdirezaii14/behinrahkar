@@ -10,6 +10,7 @@ import { useQuery } from 'react-query';
 import fetchPost from '../fetchPosts';
 import useSearchStore from '@/store/useSearchValue';
 
+import Sort from './Sort';
 function Navbar() {
     const allPosts = useQuery(['allPosts'], () => fetchPost());
     const search = useSearchStore((state) => state.filter)
@@ -24,12 +25,13 @@ function Navbar() {
         <Typography component='div' className="py-5 my-5 box-shadow">
             <Container>
                 <Grid container spacing={2}>
-                    <Grid item xs={4} md={2}>
+                    <Grid item xs={6} md={2}>
                         <Typography variant='h5' component='h1' >View posts</Typography>
                     </Grid>
-                    <Grid item xs={4} md={7} className="text-center">
+                    <Grid item xs={12} md={7} style={{position:'relative'}} className="text-center">
                         <SearchIcon className={styles.iconSearch} />
                         <InputBase value={searchValue} onChange={({ target: { value } }) => setSearchValue(value)} placeholder='search ...' className={`${styles.input} w-100 box-shadow`} />
+                        <Sort />
                     </Grid>
                 </Grid>
             </Container>
