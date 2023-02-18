@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { Post } from '@/types/post';
 import styles from './boxPost.module.css'
 
-function BoxPost({ id, body, title, userId }: Post) {
+function BoxPost({ id, body, title }: Post) {
     return (
         <Card dir='ltr' className={`box-shadow ${styles.cardBoxPost}`}>
             {/* <Image src='/img/download.png' alt='user' loader={loader} blurDataURL="blur" height={350} width={370} /> */}

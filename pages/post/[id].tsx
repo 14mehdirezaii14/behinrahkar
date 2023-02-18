@@ -32,10 +32,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 
 function Post() {
+    
     const route: any = useRouter();
     const id = route.query.id
     const { data, isLoading } = useQuery(['singlePost', id], () => fetchPost(id));
+   
     if (isLoading) return "Loading ..."
+   
     return (
         <>
             <div>
