@@ -6,32 +6,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Typography } from '@mui/material';
 import { memo, useEffect, useState } from 'react';
 import useDebounce from '@/utils/useDebounce';
-import { searchPost } from '@/utils/searchPost';
 import { useQuery } from 'react-query';
 import fetchPost from '../fetchPosts';
-
-
+import useSearchStore from '@/store/useSearchValue';
 
 function Navbar() {
     const allPosts = useQuery(['allPosts'], () => fetchPost());
-
+    const search = useSearchStore((state) => state.filter)
     const [searchValue, setSearchValue] = useState("");
-    const debounedSearchValue = useDebounce(searchValue, 3000);
-
-    const searchPostQuery: any = useQuery(
-        ["searchPost", debounedSearchValue],
-        () => searchPost(debounedSearchValue, allPosts.data),
-        {
-            enabled: debounedSearchValue.length > 0
-        },
-    );
+    const debounedSearchValue = useDebounce(searchValue, 500);
 
     useEffect(() => {
-        console.log(searchPostQuery.status)
-        if(searchPostQuery.status === 'success'){
-            console.log(searchPostQuery.data)
-        }
-    }, [searchPostQuery])
+        search(debounedSearchValue, allPosts.data)
+    }, [debounedSearchValue])
+
     return (
         <Typography component='div' className="py-5 my-5 box-shadow">
             <Container>
