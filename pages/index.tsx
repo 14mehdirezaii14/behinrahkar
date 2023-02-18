@@ -52,7 +52,7 @@ export default function Home() {
           {isLoading ? 'Loading ...' : data.map((item: Post) => {
             return (
               <Grid alignItems='center' key={item.id} item md={4}>
-                <Link shallow={true} href={`/post/${item.id}`}>
+                <Link  href={`/post/${item.id}`}>
                   <BoxPost {...item} />
                 </Link>
               </Grid>
