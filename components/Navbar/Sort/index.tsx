@@ -4,6 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useReducer } from "react";
 import useSearchStore from '@/store/useSearchValue';
+import { Post } from "@/types/post";
 
 const Sort = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -18,29 +19,30 @@ const Sort = () => {
         setAnchorEl(null);
     };
     const Low = () => {
-        let newList: any = listPosts.sort((a: any, b: any) => {
+        let newList: Post[] = listPosts.sort((a: Post, b: Post) => {
             if (a.id > b.id) {
                 return -1;
             }
         })
         reverseList(newList)
+        handleClose()
     }
 
 
 
     const Much = () => {
-        let newList: any = listPosts.sort((a: any, b: any) => {
+        let newList: Post[] = listPosts.sort((a: Post, b: Post) => {
             if (a.id < b.id) {
                 return -1;
             }
         })
         reverseList(newList)
+        handleClose()
     }
 
     return (
         <div style={{ display: 'inline-block', position: 'absolute', right: '0px' }}>
             <Button
-                id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
@@ -49,13 +51,9 @@ const Sort = () => {
                 Sort
             </Button>
             <Menu
-                id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                }}
             >
                 <MenuItem onClick={Low}>Low</MenuItem>
                 <MenuItem onClick={Much}>Much</MenuItem>

@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Typography } from '@mui/material';
 import { memo } from 'react';
 import Sort from './Sort';
-import Search from './Search';
+import Search from './Search/Search';
 
 function Navbar() {
     return (
