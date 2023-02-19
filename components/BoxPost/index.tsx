@@ -13,16 +13,16 @@ function BoxPost({ id, body, title,userId }: Post) {
         <Card dir='ltr' className={`box-shadow ${styles.cardBoxPost}`}>
             {/* <Image src='/img/download.png' alt='user' loader={loader} blurDataURL="blur" height={350} width={370} /> */}
             <CardContent>
-                <Typography align='center' gutterBottom variant="h5" component="div">
+                <Typography align='center' gutterBottom variant="h5" component="h1">
                     {title}
                 </Typography>
-                <Typography gutterBottom variant="body1" component="div">
+                <Typography className='text-left' gutterBottom component="p">
                     id : {id}
                 </Typography>
-                <Typography gutterBottom variant="body1" component="div">
+                <Typography className='text-left' gutterBottom component="p">
                     userId : {userId}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography className='text-white' variant="body2" >
                     {body}
                 </Typography>
             </CardContent>

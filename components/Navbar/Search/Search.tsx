@@ -2,7 +2,7 @@ import useSearchStore from "@/store/useSearchValue";
 import { searchPost } from "@/utils/searchPost";
 import useDebounce from "@/utils/useDebounce";
 import { InputBase } from "@mui/material"
-import { useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import fetchPost from "../../fetchPosts";
 import styles from '../style.module.css';
@@ -14,7 +14,7 @@ function Search() {
     const [searchInput, setSearchInput] = useState("");
     const debounedSearchValue = useDebounce(searchInput, 500);
     const { data: allPost } = useQuery(['allPosts'], () => fetchPost());
-    useMemo(() => {
+    useEffect(() => {
         if (!debounedSearchValue) {
             setAllPost(allPost)
         } else {
@@ -27,4 +27,4 @@ function Search() {
 }
 
 
-export default Search
+export default memo(Search)

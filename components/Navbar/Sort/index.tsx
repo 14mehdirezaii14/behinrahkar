@@ -11,7 +11,6 @@ const Sort = () => {
     const open = Boolean(anchorEl);
     const listPosts = useSearchStore((state) => state.value)
     const reverseList = useSearchStore((state) => state.reverseList)
-    const [testState, setTestState] = useState()
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -19,25 +18,23 @@ const Sort = () => {
         setAnchorEl(null);
     };
     const Low = () => {
-        let newList: Post[] = listPosts.sort((a: Post, b: Post) => {
-            if (a.id > b.id) {
-                return -1;
-            }
-        })
-        reverseList(newList)
         handleClose()
-    }
-
-
-
-    const Much = () => {
-        let newList: Post[] = listPosts.sort((a: Post, b: Post) => {
+        let newList: any = listPosts.sort((a: any, b: any) => {
             if (a.id < b.id) {
                 return -1;
             }
         })
         reverseList(newList)
+    }
+
+    const Much = () => {
         handleClose()
+        let newList: any = listPosts.sort((a: any, b: any) => {
+            if (a.id > b.id) {
+                return -1;
+            }
+        })
+        reverseList(newList)
     }
 
     return (
@@ -53,7 +50,7 @@ const Sort = () => {
             <Menu
                 anchorEl={anchorEl}
                 open={open}
-                onClose={handleClose}
+                // onClose={handleClose}
             >
                 <MenuItem onClick={Low}>Low</MenuItem>
                 <MenuItem onClick={Much}>Much</MenuItem>

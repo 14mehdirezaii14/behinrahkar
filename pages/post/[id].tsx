@@ -5,6 +5,7 @@ import fetchPost from "@/components/fetchPosts";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { Container, Typography } from "@mui/material";
 export const getStaticProps: GetStaticProps = async (context) => {
 
     const id = context.params?.id as string;
@@ -32,23 +33,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 
 function Post() {
-    
+
     const route: any = useRouter();
     const id = route.query.id
     const { data, isLoading } = useQuery(['singlePost', id], () => fetchPost(id));
-   
+
     if (isLoading) return "Loading ..."
-   
+
     return (
-        <>
-            <div>
-                <Link shallow={true} href='/'>Back</Link>
-                <p>title : {data.title}</p>
-                <p>id : {data.id}</p>
-                <p>body : {data.body}</p>
-                <p>userId : {data.userId}</p>
-            </div>
-        </>
+        <Container className='mt-10'>
+            <Typography className="my-5" component="div">
+                <Link className="bg-stone-800 shadow my-40 p-3 rounded-lg" shallow={true} href='/'>Back</Link>
+            </Typography>
+            <p>title : {data.title}</p>
+            <p>id : {data.id}</p>
+            <p>body : {data.body}</p>
+            <p>userId : {data.userId}</p>
+        </Container>
     )
 
 }

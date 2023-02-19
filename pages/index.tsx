@@ -7,7 +7,8 @@ import fetchPost from '@/components/fetchPosts';
 import { Post } from '@/types/post';
 import useSearchStore from '@/store/useSearchValue';
 import { lazy, Suspense } from 'react';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
+import Loading from '@/components/Loading';
 const BoxPost = lazy(() => import('../components/BoxPost'))
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -28,10 +29,10 @@ export default function Home() {
   });
   return (
     <>
-      <Container>
-        <Grid container spacing={2} alignItems="center">
-          <Suspense fallback={<CircularProgress />}>
-            {isLoading ? <CircularProgress /> : listPosts[0] ? "notFOund" : listPosts.map((item: Post) => {
+      <Container className='mt-10'>
+        <Suspense fallback={<Loading />}>
+          <Grid container spacing={2} >
+            {isLoading ? <Loading /> : listPosts[0] === "notFound" ? "notFound" : listPosts.map((item: Post) => {
               return (
                 <Grid alignItems='center' key={item.id} item md={4}>
                   <Link href={`/post/${item.id}`}>
@@ -40,8 +41,9 @@ export default function Home() {
                 </Grid>
               )
             })}
-          </Suspense>
-        </Grid>
+
+          </Grid>
+        </Suspense>
       </Container>
     </>
   )
