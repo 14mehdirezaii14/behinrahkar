@@ -3,4 +3,5 @@ export default interface SearchValueState {
     value: any
     fillter: (data: Post[]) => void
     setAllPost: (data: Post[]) => void
+    reverseList: (data: Post[]) => void
 }

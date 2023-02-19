@@ -4,13 +4,10 @@ import styles from './style.module.css'
 import SearchIcon from '@mui/icons-material/Search';
 import { Typography } from '@mui/material';
 import { memo } from 'react';
-
 import Sort from './Sort';
-
-
 import Search from './Search';
-function Navbar() {
 
+function Navbar() {
     return (
         <Typography component='div' className="py-5 my-5 box-shadow">
             <Container>

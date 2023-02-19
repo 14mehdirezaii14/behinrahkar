@@ -8,7 +8,7 @@ import Link from 'next/link';
 import fetchPost from '@/components/fetchPosts';
 import { Post } from '@/types/post';
 import useSearchStore from '@/store/useSearchValue';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { error } from 'console';
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -22,12 +22,12 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default function Home() {
+  
   const listPosts = useSearchStore((state) => state.value)
   const setAllPost = useSearchStore((state) => state.setAllPost)
   const { isLoading } = useQuery(['allPosts'], () => fetchPost(), {
     onSuccess: (data) => setAllPost(data)
   });
-
 
   if (isLoading) {
     return "Loading ..."
@@ -36,6 +36,7 @@ export default function Home() {
   if (listPosts[0] === "notFound") {
     return "NotFOund"
   }
+
   return (
     <>
       <Container>
@@ -43,7 +44,7 @@ export default function Home() {
           {listPosts.map((item: Post) => {
             return (
               <Grid alignItems='center' key={item.id} item md={4}>
-                <Link  href={`/post/${item.id}`}>
+                <Link href={`/post/${item.id}`}>
                   <BoxPost {...item} />
                 </Link>
               </Grid>

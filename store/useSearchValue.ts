@@ -12,6 +12,12 @@ const useSearchStore = create<SearchValueState>((set) => ({
     setAllPost: (data) => {
         console.log('setAllPost run setter',data)
         set(() => ({ value: data }))
+    },
+    reverseList:(data) => {
+
+        set((state) => {
+            return({value: [...data]})
+        })
     }
 }))
 
