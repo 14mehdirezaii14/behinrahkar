@@ -1,5 +1,6 @@
-import {Post} from "./post"
+import { Post } from "./post"
 export default interface SearchValueState {
-    value: Post[] | string[]
-    filter: (query: string, post: Post[]) => void
+    value: any
+    fillter: (data: Post[]) => void
+    setAllPost: (data: Post[]) => void
 }

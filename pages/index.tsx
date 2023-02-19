@@ -8,6 +8,8 @@ import Link from 'next/link';
 import fetchPost from '@/components/fetchPosts';
 import { Post } from '@/types/post';
 import useSearchStore from '@/store/useSearchValue';
+import { useEffect } from 'react';
+import { error } from 'console';
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
@@ -20,36 +22,25 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default function Home() {
-  const { data, isLoading } = useQuery(['allPosts'], () => fetchPost());
-  const searchValuee = useSearchStore((state) => state.value)
+  const listPosts = useSearchStore((state) => state.value)
+  const setAllPost = useSearchStore((state) => state.setAllPost)
+  const { isLoading } = useQuery(['allPosts'], () => fetchPost(), {
+    onSuccess: (data) => setAllPost(data)
+  });
 
-  if (searchValuee[0] === "notFound") {
-    return "NotFOund"
+
+  if (isLoading) {
+    return "Loading ..."
   }
-  else if (searchValuee.length > 0) {
-    return (
-      <>
-        <Container>
-          <Grid container spacing={2}>
-            {isLoading ? 'Loading ...' : searchValuee.map((item: any) => {
-              return (
-                <Grid alignItems='center' key={item.id} item md={4}>
-                  <Link shallow={true} href={`/post/${item.id}`}>
-                    <BoxPost {...item} />
-                  </Link>
-                </Grid>
-              )
-            })}
-          </Grid>
-        </Container>
-      </>
-    )
+
+  if (listPosts[0] === "notFound") {
+    return "NotFOund"
   }
   return (
     <>
       <Container>
         <Grid container spacing={2}>
-          {isLoading ? 'Loading ...' : data.map((item: Post) => {
+          {listPosts.map((item: Post) => {
             return (
               <Grid alignItems='center' key={item.id} item md={4}>
                 <Link shallow={true} href={`/post/${item.id}`}>

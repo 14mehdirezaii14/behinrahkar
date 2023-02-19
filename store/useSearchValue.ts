@@ -5,9 +5,14 @@ import SearchValueState from '@/types/SearchValueState'
 
 const useSearchStore = create<SearchValueState>((set) => ({
     value: [],
-    filter: (query, posts) => {
-        set((state) => ({ value: searchPost(query, posts) }))
+    fillter: (data) => {
+        console.log('filtter run setter',data)
+        set(() => ({ value: data }))
     },
+    setAllPost: (data) => {
+        console.log('setAllPost run setter',data)
+        set(() => ({ value: data }))
+    }
 }))
 
 export default useSearchStore;
