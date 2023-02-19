@@ -1,7 +1,6 @@
 import { Post } from "@/types/post";
 
 export function searchPost(query: string, posts: Post[]): any {
-    console.log(query)
     let data: any = []
     if (query && posts) {
         new Promise((resolve) => {
