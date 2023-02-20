@@ -5,8 +5,5 @@ const nextConfig = {
 
 module.exports = {
   nextConfig,
-  env: {
-    server: 'https://jsonplaceholder.typicode.com',
-  }
 }
 
