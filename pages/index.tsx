@@ -13,7 +13,7 @@ const BoxPost = lazy(() => import('../components/BoxPost'))
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['allPosts'], () => fetchPost());
+  await queryClient.prefetchQuery('allPosts', () => fetchPost());
   return {
     props: {
       dehydratedState: dehydrate(queryClient)
@@ -24,7 +24,7 @@ export const getStaticProps: GetStaticProps = async () => {
 export default function Home() {
   const listPosts = useSearchStore((state) => state.value)
   const setAllPost = useSearchStore((state) => state.setAllPost)
-  const { isLoading } = useQuery(['allPosts'], () => fetchPost(), {
+  const { isLoading } = useQuery('allPosts', () => fetchPost(), {
     onSuccess: (data) => setAllPost(data)
   });
   useEffect(() => {

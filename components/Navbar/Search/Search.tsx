@@ -13,7 +13,7 @@ function Search() {
     const setAllPost = useSearchStore((state) => state.setAllPost)
     const [searchInput, setSearchInput] = useState("");
     const debounedSearchValue = useDebounce(searchInput, 500);
-    const { data: allPost } = useQuery(['allPosts'], () => fetchPost());
+    const { data: allPost } = useQuery('allPosts', () => fetchPost());
     useEffect(() => {
         if (!debounedSearchValue) {
             setAllPost(allPost)

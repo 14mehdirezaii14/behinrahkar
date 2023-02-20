@@ -5,17 +5,9 @@ import SearchValueState from '@/types/SearchValueState'
 
 const useSearchStore = create<SearchValueState>((set) => ({
     value: [],
-    fillter: (data) => {
-        set(() => ({ value: data }))
-    },
-    setAllPost: (data) => {
-        set(() => ({ value: data }))
-    },
-    reverseList: (data) => {
-        set(() => {
-            return ({ value: [...data] })
-        })
-    }
+    fillter: (data) => set(() => ({ value: data })),
+    setAllPost: (data) => set(() => ({ value: data })),
+    reverseList: (data) => set(() => ({ value: [...data] }))
 }))
 
 export default useSearchStore;
