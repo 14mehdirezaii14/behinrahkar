@@ -22,7 +22,7 @@ function Search() {
         }
     }, [debounedSearchValue])
     return (
-        <InputBase value={searchInput} onChange={({ target: { value } }) => setSearchInput(value)} placeholder='search ...' className={`${styles.input} w-100 box-shadow`} />
+        <InputBase value={searchInput} onChange={({ target: { value } }) => setSearchInput(value)} placeholder='search ...' className={`${styles.input}  w-100 box-shadow`} data-cy="searchInput" />
     )
 }
 

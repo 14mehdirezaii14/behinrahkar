@@ -8,7 +8,7 @@
 import axios from 'axios'
 
 export const fetchPost = async (id?:string) => {
-    const { data } = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id ? id : ''}`);
+    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_SERVER}/posts/${id ? id : ''}`);
     return data;
 }
 

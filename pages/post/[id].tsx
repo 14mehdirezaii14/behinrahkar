@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async (context) => {
     return {
         paths: [],
         fallback: "blocking"
@@ -45,7 +45,7 @@ function Post() {
             {isLoading ? <Loading /> :
                 <>
                     <Typography className="my-5" component="div">
-                        <Link className="bg-stone-800 shadow my-40 mb-56 p-3 rounded-lg" href='/' title="back"><ArrowBackIcon /></Link>
+                        <Link className="bg-stone-800  shadow my-40 mb-56 p-3 rounded-lg" data-cy="back" href='/' title="back"><ArrowBackIcon /></Link>
                     </Typography>
                     <Typography component='p' className="mt-16">title : {data.title}</Typography>
                     <Typography component='p'>id : {data.id}</Typography>

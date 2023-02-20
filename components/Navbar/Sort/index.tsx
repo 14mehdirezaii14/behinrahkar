@@ -36,6 +36,7 @@ const Sort = () => {
     return (
         <div className="absolute inline-block right-0">
             <Button
+                data-cy="Sort"
                 title="Sort List"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
@@ -49,8 +50,8 @@ const Sort = () => {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem onClick={Low}>Low</MenuItem>
-                <MenuItem onClick={Much}>Much</MenuItem>
+                <MenuItem data-cy="Low" onClick={Low}>Low</MenuItem>
+                <MenuItem data-cy="Much" onClick={Much}>Much</MenuItem>
             </Menu>
         </div>
     );
