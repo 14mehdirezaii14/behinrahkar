@@ -3,9 +3,9 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useReducer } from "react";
-import useSearchStore from '@/store/useSearchValue';
+import useSearchStore from '@/store/useListPosts';
 import { Post } from "@/types/post";
-
+import TuneIcon from '@mui/icons-material/Tune';
 const Sort = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -19,38 +19,35 @@ const Sort = () => {
     };
     const Low = () => {
         handleClose()
-        let newList: any = listPosts.sort((a: any, b: any) => {
-            if (a.id < b.id) {
-                return -1;
-            }
+        let newList: any = listPosts.sort(function (a: Post, b: Post) {
+            return a.id > b.id ? 1 : -1;
         })
         reverseList(newList)
     }
 
     const Much = () => {
         handleClose()
-        let newList: any = listPosts.sort((a: any, b: any) => {
-            if (a.id > b.id) {
-                return -1;
-            }
+        let newList: any = listPosts.sort(function (a: Post, b: Post) {
+            return a.id < b.id ? 1 : -1;
         })
         reverseList(newList)
     }
 
     return (
-        <div style={{ display: 'inline-block', position: 'absolute', right: '0px' }}>
+        <div className="absolute inline-block right-0">
             <Button
+                title="Sort List"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
-                Sort
+                <TuneIcon className="text-white" />
             </Button>
             <Menu
                 anchorEl={anchorEl}
                 open={open}
-                // onClose={handleClose}
+                onClose={handleClose}
             >
                 <MenuItem onClick={Low}>Low</MenuItem>
                 <MenuItem onClick={Much}>Much</MenuItem>

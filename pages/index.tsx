@@ -5,8 +5,8 @@ import { GetStaticProps, } from "next"
 import Link from 'next/link';
 import fetchPost from '@/components/fetchPosts';
 import { Post } from '@/types/post';
-import useSearchStore from '@/store/useSearchValue';
-import { lazy, Suspense } from 'react';
+import useSearchStore from '@/store/useListPosts';
+import { lazy, Suspense, useEffect } from 'react';
 import { CircularProgress, Typography } from '@mui/material';
 import Loading from '@/components/Loading';
 const BoxPost = lazy(() => import('../components/BoxPost'))
@@ -27,6 +27,9 @@ export default function Home() {
   const { isLoading } = useQuery(['allPosts'], () => fetchPost(), {
     onSuccess: (data) => setAllPost(data)
   });
+  useEffect(() => {
+    console.log(listPosts)
+  }, [listPosts])
   return (
     <>
       <Container className='mt-10'>

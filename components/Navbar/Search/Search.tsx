@@ -1,4 +1,4 @@
-import useSearchStore from "@/store/useSearchValue";
+import useSearchStore from "@/store/useListPosts";
 import { searchPost } from "@/utils/searchPost";
 import useDebounce from "@/utils/useDebounce";
 import { InputBase } from "@mui/material"

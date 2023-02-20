@@ -12,7 +12,6 @@ const useSearchStore = create<SearchValueState>((set) => ({
         set(() => ({ value: data }))
     },
     reverseList: (data) => {
-
         set(() => {
             return ({ value: [...data] })
         })

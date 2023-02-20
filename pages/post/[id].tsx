@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { Container, Typography } from "@mui/material";
 import Loading from "@/components/Loading";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 export const getStaticProps: GetStaticProps = async (context) => {
 
     const id = context.params?.id as string;
@@ -41,13 +42,16 @@ function Post() {
 
     return (
         <Container className='mt-10'>
-            {isLoading ? <Loading /> : <><Typography className="my-5" component="div">
-                <Link className="bg-stone-800 shadow my-40 p-3 rounded-lg" shallow={true} href='/'>Back</Link>
-            </Typography>
-                <p>title : {data.title}</p>
-                <p>id : {data.id}</p>
-                <p>body : {data.body}</p>
-                <p>userId : {data.userId}</p></>}
+            {isLoading ? <Loading /> :
+                <>
+                    <Typography className="my-5" component="div">
+                        <Link className="bg-stone-800 shadow my-40 mb-56 p-3 rounded-lg" href='/' title="back"><ArrowBackIcon /></Link>
+                    </Typography>
+                    <Typography component='p' className="mt-16">title : {data.title}</Typography>
+                    <Typography component='p'>id : {data.id}</Typography>
+                    <Typography component='p'>body : {data.body}</Typography>
+                    <Typography component='p'>userId : {data.userId}</Typography>
+                </>}
         </Container>
     )
 
