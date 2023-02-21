@@ -1,16 +1,15 @@
-import { memo, useEffect, useState } from "react"
+import { memo, useState } from "react"
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useReducer } from "react";
-import useSearchStore from '@/store/useListPosts';
+import useListPosts from '@/store/useListPosts';
 import { Post } from "@/types/post";
 import TuneIcon from '@mui/icons-material/Tune';
 const Sort = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const listPosts = useSearchStore((state) => state.value)
-    const reverseList = useSearchStore((state) => state.reverseList)
+    const listPosts = useListPosts((state) => state.value)
+    const reverseList = useListPosts((state) => state.reverseList)
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };

@@ -1,10 +1,6 @@
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
-import Image from 'next/image';
-import { loader } from '../loaderImage';
-import { useEffect } from 'react';
 import { Post } from '@/types/post';
 import styles from './boxPost.module.css'
 

@@ -5,9 +5,8 @@ import { GetStaticProps, } from "next"
 import Link from 'next/link';
 import fetchPost from '@/components/fetchPosts';
 import { Post } from '@/types/post';
-import useSearchStore from '@/store/useListPosts';
+import useListPosts from '@/store/useListPosts';
 import { lazy, Suspense, useEffect } from 'react';
-import { CircularProgress, Typography } from '@mui/material';
 import Loading from '@/components/Loading';
 const BoxPost = lazy(() => import('../components/BoxPost'))
 
@@ -22,14 +21,12 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default function Home() {
-  const listPosts = useSearchStore((state) => state.value)
-  const setAllPost = useSearchStore((state) => state.setAllPost)
+  const listPosts = useListPosts((state) => state.value)
+  const setAllPost = useListPosts((state) => state.setAllPost)
   const { isLoading } = useQuery('allPosts', () => fetchPost(), {
     onSuccess: (data) => setAllPost(data)
   });
-  useEffect(() => {
-    console.log(listPosts)
-  }, [listPosts])
+
   return (
     <>
       <Container className='mt-10'>
@@ -44,7 +41,6 @@ export default function Home() {
                 </Grid>
               )
             })}
-
           </Grid>
         </Suspense>
       </Container>
